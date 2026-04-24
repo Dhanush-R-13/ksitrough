@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Witness AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background: #0f172a;
+    color: white;
+}
+
+/* HEADER */
+header {
+    text-align: center;
+    padding: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #6366f1, #22c55e);
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+/* MAIN LAYOUT */
+.container {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* CARDS */
+.card {
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    animation: slideUp 0.8s ease;
+}
+
+.card h2 {
+    margin-bottom: 10px;
+}
+
+/* INPUT */
+textarea {
+    width: 100%;
+    height: 70px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+    padding: 8px;
+    resize: none;
+}
+
+/* BUTTONS */
+button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #6366f1;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #22c55e;
+    transform: scale(1.05);
+}
+
+/* OUTPUT */
+.output-box {
+    background: #0f172a;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    min-height: 80px;
+    animation: fadeIn 1s ease;
+}
+
+/* CHAT */
+.chat-box {
+    max-height: 150px;
+    overflow-y: auto;
+    background: #020617;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* GRAPH */
+.bar {
+    height: 20px;
+    margin: 5px 0;
+    background: linear-gradient(90deg, #6366f1, #22c55e);
+    border-radius: 5px;
+    animation: grow 1s ease;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes slideUp {
+    from {transform: translateY(30px); opacity: 0;}
+    to {transform: translateY(0); opacity: 1;}
+}
+
+@keyframes grow {
+    from {width: 0;}
+}
+</style>
+</head>
+
+<body>
+
+<header>Witness AI 🔍</header>
+
+<div class="container">
+
+    <!-- INPUT SECTION -->
+    <div class="card">
+        <h2>Witness Inputs</h2>
+        <textarea placeholder="Witness 1..."></textarea>
+        <textarea placeholder="Witness 2..."></textarea>
+        <textarea placeholder="Witness 3..."></textarea>
+        
+        <button onclick="generateOutput()">Analyze Event</button>
+    </div>
+
+    <!-- OUTPUT SECTION -->
+    <div class="card">
+        <h2>Reconstructed Truth</h2>
+        <div id="output" class="output-box">AI result will appear here...</div>
+    </div>
+
+    <!-- AI CONVERSATION -->
+    <div class="card">
+        <h2>AI Reasoning (Conversation)</h2>
+        <div id="chat" class="chat-box"></div>
+    </div>
+
+    <!-- GRAPH -->
+    <div class="card">
+        <h2>Confidence Graph</h2>
+        <div id="graph"></div>
+    </div>
+
+</div>
+
+<script>
+function generateOutput() {
+    let output = document.getElementById("output");
+    let chat = document.getElementById("chat");
+    let graph = document.getElementById("graph");
+
+    // Fake AI Output (you can connect backend later)
+    output.innerHTML = "🚗 Accident occurred at 8PM. Most witnesses agree the car was speeding.";
+
+    // Simulated AI Conversation
+    chat.innerHTML = "";
+    let messages = [
+        "AI-1: Witness 1 says car was fast.",
+        "AI-2: Witness 2 confirms high speed.",
+        "AI-1: Witness 3 unclear about timing.",
+        "AI-2: Majority supports speeding conclusion."
+    ];
+
+    messages.forEach((msg, i) => {
+        setTimeout(() => {
+            let div = document.createElement("div");
+            div.innerText = msg;
+            div.style.marginBottom = "5px";
+            chat.appendChild(div);
+        }, i * 500);
+    });
+
+    // Graph
+    graph.innerHTML = "";
+    let values = [80, 90, 60]; // confidence %
+
+    values.forEach(v => {
+        let bar = document.createElement("div");
+        bar.className = "bar";
+        bar.style.width = v + "%";
+        bar.innerText = v + "%";
+        graph.appendChild(bar);
+    });
+}
+</script>
+
+</body>
+</html>
