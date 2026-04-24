@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WitnessAI</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <canvas id="particles-canvas"></canvas>
+  <div class="grid-overlay"></div>
+
+  <div class="main-container">
+
+    <!-- Header -->
+    <header class="header">
+      <h1 class="logo-text">WitnessAI</h1>
+      <p class="tagline">Where AI Meets Truth</p>
+    </header>
+
+    <!-- Witness Input -->
+    <section class="input-section">
+      <h2>Witness Testimonies</h2>
+
+      <div id="witnesses-grid" class="witnesses-grid">
+        <div class="witness-card">
+          <textarea class="witness-textarea" placeholder="Enter testimony..."></textarea>
+        </div>
+        <div class="witness-card">
+          <textarea class="witness-textarea" placeholder="Enter testimony..."></textarea>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button id="add-witness-btn">Add Witness</button>
+        <button id="analyze-btn">Analyze</button>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section id="results-section" class="results-section">
+      <h2>Analysis Results</h2>
+
+      <div id="summary"></div>
+      <div id="contradictions"></div>
+      <div id="timeline"></div>
+    </section>
+
+  </div>
+
+  <!-- JS -->
+  <script src="script.js"></script>
+  <script src="components/timeline.js"></script>
+  <script src="components/contradictions.js"></script>
+  <script src="components/summary.js"></script>
+
+</body>
+</html>
