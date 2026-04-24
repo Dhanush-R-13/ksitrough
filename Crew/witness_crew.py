@@ -63,22 +63,27 @@ def run_witness_analysis(crime_scene: str, witness_data: str):
     )
 
     report_task = Task(
-        description="""Take the Judge's raw verdict and format it into a professional, easily readable 'Final Analysis Report'.
-        Structure it exactly like this:
-        ---
+        description="""You are a strict formatting bot. You MUST take the Judge's raw verdict and format it exactly as shown below. 
+        DO NOT include pleasantries. DO NOT include introductory text. You MUST include the emojis.
+        
+        Copy this exact structure:
+        
         🚨 INCIDENT TIMELINE
-        [Insert Timeline here]
+        - [Time]: [Event]
+        - [Time]: [Event]
         
         ⚖️ WITNESS RELIABILITY SCORES
-        [Insert Scores and short reasons here]
+        Witness 1: [Score]% - [Reason]
+        Witness 2: [Score]% - [Reason]
         
         🔍 CRITICAL CONTRADICTIONS & FORENSIC FLAWS
-        [Insert the biggest lies or impossible physics here]
+        - [Contradiction 1]
+        - [Contradiction 2]
         
         📝 CHIEF JUSTICE FINAL VERDICT
         [Insert the Judge's final conclusion here]
-        ---""",
-        expected_output="A beautifully formatted final report ready for the UI.",
+        """,
+        expected_output="A report strictly formatted with the 4 exact emoji headers.",
         agent=reporter
     )
 

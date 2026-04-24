@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WitnessAI — Chief Justice Pipeline</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Syne:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Ambient Background -->
+  <div class="bg-grid"></div>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-block">
+        <div class="logo-icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="18" stroke="url(#lg1)" stroke-width="1.5"/>
+            <path d="M12 28 L20 12 L28 28" stroke="url(#lg1)" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14 24 H26" stroke="url(#lg2)" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="20" cy="20" r="3" fill="url(#lg1)"/>
+            <defs>
+              <linearGradient id="lg1" x1="0" y1="0" x2="40" y2="40">
+                <stop offset="0%" stop-color="#00d4ff"/>
+                <stop offset="100%" stop-color="#7b2fff"/>
+              </linearGradient>
+              <linearGradient id="lg2" x1="0" y1="0" x2="40" y2="0">
+                <stop offset="0%" stop-color="#ff6b35"/>
+                <stop offset="100%" stop-color="#ff2d55"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div>
+          <h1 class="logo-title">WitnessAI</h1>
+          <p class="logo-sub">Chief Justice Multi-Agent Pipeline</p>
+        </div>
+      </div>
+      <div class="header-status">
+        <span class="status-dot" id="statusDot"></span>
+        <span class="status-label" id="statusLabel">Ready</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <main class="main-layout">
+
+    <!-- LEFT PANEL: Inputs -->
+    <section class="panel input-panel" id="inputPanel">
+      <div class="panel-header">
+        <span class="panel-icon">🏛️</span>
+        <h2>Case Input</h2>
+      </div>
+
+      <!-- Crime Scene -->
+      <div class="field-group">
+        <label class="field-label">
+          <span class="label-icon">🔎</span> Crime Scene / Ground Truth
+        </label>
+        <textarea id="crimeSceneInput" class="glass-textarea" rows="4"
+          placeholder="Describe the physical crime scene, confirmed facts, forensic evidence..."></textarea>
+      </div>
+
+      <!-- Witness Statements -->
+      <div class="field-group">
+        <div class="witnesses-header">
+          <label class="field-label">
+            <span class="label-icon">👥</span> Witness Statements
+          </label>
+          <button class="btn-add" id="addWitnessBtn" onclick="addWitness()">+ Add Witness</button>
+        </div>
+        <div id="witnessContainer"></div>
+      </div>
+
+      <!-- Analyze Button -->
+      <button class="btn-analyze" id="analyzeBtn" onclick="startAnalysis()">
+        <span class="btn-text">Run Analysis</span>
+        <span class="btn-icon">⚡</span>
+      </button>
+
+      <!-- Progress -->
+      <div class="progress-block" id="progressBlock" style="display:none">
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <p class="progress-label" id="progressLabel">Initializing agents...</p>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: Results -->
+    <section class="panel results-panel" id="resultsPanel">
+
+      <!-- Tabs -->
+      <div class="tabs-bar">
+        <button class="tab-btn active" data-tab="agents" onclick="switchTab('agents', this)">
+          🧠 Agent Feed
+        </button>
+        <button class="tab-btn" data-tab="timeline" onclick="switchTab('timeline', this)">
+          🕐 Timeline
+        </button>
+        <button class="tab-btn" data-tab="reliability" onclick="switchTab('reliability', this)">
+          ⚖️ Reliability
+        </button>
+        <button class="tab-btn" data-tab="contradictions" onclick="switchTab('contradictions', this)">
+          🔍 Contradictions
+        </button>
+        <button class="tab-btn" data-tab="verdict" onclick="switchTab('verdict', this)">
+          📝 Verdict
+        </button>
+        <button class="tab-btn" data-tab="graphs" onclick="switchTab('graphs', this)">
+          📊 Analytics
+        </button>
+      </div>
+
+      <!-- Tab: Agent Thinking Feed -->
+      <div class="tab-content active" id="tab-agents">
+        <div class="agent-grid" id="agentGrid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Tab: Timeline -->
+      <div class="tab-content" id="tab-timeline">
+        <div id="timelineContainer" class="timeline-wrap">
+          <div class="empty-state">
+            <span>🕐</span>
+            <p>Run an analysis to see the reconstructed timeline.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Reliability Scores -->
+      <div class="tab-content" id="tab-reliability">
+        <div id="reliabilityContainer" class="reliability-wrap">
+          <div class="empty-state">
+            <span>⚖️</span>
+            <p>Witness reliability scores will appear here.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Contradictions -->
+      <div class="tab-content" id="tab-contradictions">
+        <div id="contradictionsContainer" class="contradictions-wrap">
+          <div class="empty-state">
+            <span>🔍</span>
+            <p>Contradictions and discrepancies will appear here.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Final Verdict -->
+      <div class="tab-content" id="tab-verdict">
+        <div id="verdictContainer" class="verdict-wrap">
+          <div class="empty-state">
+            <span>📝</span>
+            <p>The Chief Justice's final verdict will appear here.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Analytics / Graphs -->
+      <div class="tab-content" id="tab-graphs">
+        <div class="graphs-grid">
+          <div class="graph-card glass-card">
+            <h3 class="graph-title">Agent Execution Time</h3>
+            <canvas id="chartExecTime"></canvas>
+          </div>
+          <div class="graph-card glass-card">
+            <h3 class="graph-title">Witness Reliability Scores</h3>
+            <canvas id="chartReliability"></canvas>
+          </div>
+          <div class="graph-card glass-card">
+            <h3 class="graph-title">Contradiction Severity</h3>
+            <canvas id="chartContradictions"></canvas>
+          </div>
+          <div class="graph-card glass-card">
+            <h3 class="graph-title">Agent Confidence Levels</h3>
+            <canvas id="chartConfidence"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="components/timeline.js"></script>
+  <script src="components/contradictions.js"></script>
+  <script src="components/summary.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
