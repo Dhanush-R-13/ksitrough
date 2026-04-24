@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Witness AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<header>🤖 Witness AI System</header>
+
+<div class="container">
+
+  <!-- INPUT -->
+  <div class="card">
+    <h3>Add Witness Statement</h3>
+    <textarea id="inputText"></textarea>
+    <button class="btn-add" onclick="addWitness()">Add Witness</button>
+  </div>
+
+  <!-- LIST -->
+  <div class="card">
+    <h3>Witness Inputs</h3>
+    <div id="witnessList"></div>
+  </div>
+
+  <button class="btn-analyze" onclick="analyze()">Analyze Event</button>
+
+  <!-- AI AGENTS -->
+  <div class="grid" id="aiCards"></div>
+
+  <!-- DISCUSSION -->
+  <div class="discussion" id="discussion"></div>
+
+  <!-- FINAL -->
+  <div class="final" id="final"></div>
+
+  <!-- GRAPH -->
+  <div class="card" id="chartBox" style="display:none;">
+    <h3>Confidence Timeline</h3>
+    <canvas id="chart"></canvas>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
