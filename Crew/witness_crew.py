@@ -63,30 +63,28 @@ def run_witness_analysis(crime_scene: str, witness_data: str):
     )
 
     report_task = Task(
-        description="""You are a strict formatting bot. You MUST take the Judge's raw verdict and format it exactly as shown below. 
-        DO NOT include pleasantries. DO NOT include introductory text. You MUST include the emojis.
+        description="""Synthesize the findings from the other agents. 
+        You MUST output your final answer as a single, raw JSON object. Do not output anything outside of the JSON.
         
-        Copy this exact structure:
+        Your JSON object must contain exactly these 5 keys:
+        "agreed": (integer, number of agreed facts),
+        "contradictions": (integer, number of contradictions),
+        "gaps": (integer, number of evidence gaps),
+        "confidence": (integer, overall confidence score out of 100),
+        "verdict": (string, write a detailed 3-4 sentence summary of who is reliable, who is lying, and what the police should do).
         
-        🚨 INCIDENT TIMELINE
-        - [Time]: [Event]
-        - [Time]: [Event]
-        
-        ⚖️ WITNESS RELIABILITY SCORES
-        Witness 1: [Score]% - [Reason]
-        Witness 2: [Score]% - [Reason]
-        
-        🔍 CRITICAL CONTRADICTIONS & FORENSIC FLAWS
-        - [Contradiction 1]
-        - [Contradiction 2]
-        
-        📝 CHIEF JUSTICE FINAL VERDICT
-        [Insert the Judge's final conclusion here]
+        EXAMPLE FORMAT:
+        {
+            "agreed": 5,
+            "contradictions": 2,
+            "gaps": 1,
+            "confidence": 85,
+            "verdict": "Witness 2 is highly reliable as they match the ground truth. Witness 3 is hallucinating details about the weather. Prioritize the search for the silver sedan."
+        }
         """,
-        expected_output="A report strictly formatted with the 4 exact emoji headers.",
-        agent=reporter
+        expected_output="A strict JSON object containing the 4 metrics and the text verdict.",
+        agent=reporter # (Change this to whatever your final agent is named)
     )
-
     # 3. Form the 7-Agent Crew
     # Because you are running locally, we removed max_rpm and sleep callbacks!
     crew = Crew(
